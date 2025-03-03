@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
@@ -9,38 +9,38 @@ export async function GET() {
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    // Get today's prescriptions count
-    const todayPrescriptions = await prisma.prescription.count({
-      where: {
-        createdAt: {
-          gte: today,
-          lt: tomorrow
-        }
-      }
+    // Use a transaction to ensure consistent connection handling
+    const stats = await prisma.$transaction(async (tx) => {
+      const [todayPrescriptions, todayMedicines, totalPrescriptions, totalMedicines] = await Promise.all([
+        tx.prescription.count({
+          where: {
+            createdAt: {
+              gte: today,
+              lt: tomorrow
+            }
+          }
+        }),
+        tx.medicine.count({
+          where: {
+            createdAt: {
+              gte: today,
+              lt: tomorrow
+            }
+          }
+        }),
+        tx.prescription.count(),
+        tx.medicine.count()
+      ]);
+
+      return {
+        todayPrescriptions,
+        todayMedicines,
+        totalPrescriptions,
+        totalMedicines
+      };
     });
 
-    // Get today's medicines count
-    const todayMedicines = await prisma.medicine.count({
-      where: {
-        createdAt: {
-          gte: today,
-          lt: tomorrow
-        }
-      }
-    });
-
-    // Get total prescriptions count
-    const totalPrescriptions = await prisma.prescription.count();
-
-    // Get total medicines count
-    const totalMedicines = await prisma.medicine.count();
-
-    return NextResponse.json({
-      todayPrescriptions,
-      todayMedicines,
-      totalPrescriptions,
-      totalMedicines
-    });
+    return NextResponse.json(stats);
   } catch (error) {
     console.error('Failed to fetch dashboard stats:', error);
     return NextResponse.json(
