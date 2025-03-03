@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Medicine {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  description  String?
+  dosageForm   String?
+  strength     String?
+  manufacturer String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("medicines")
+}
+
+model Prescription {
+  id           String         @id @default(cuid())
+  date         DateTime
+  patientName  String
+  age          Int
+  phoneNumber  String?
+  courseDays   Int           @default(5)
+  doctorNotes  String?
+  nextVisit    DateTime?
+  vitalSigns   String?
+  medicines    PrescriptionMedicine[]
+  testReports  TestReport[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("prescriptions")
+}
+
+model PrescriptionMedicine {
+  id            String      @id @default(cuid())
+  name          String
+  morning       Boolean     @default(false)
+  afternoon     Boolean     @default(false)
+  evening       Boolean     @default(false)
+  night         Boolean     @default(false)
+  quantity      Int         @default(0)
+  prescription  Prescription @relation(fields: [prescriptionId], references: [id], onDelete: Cascade)
+  prescriptionId String
+
+  @@map("prescription_medicines")
+}
+
+model TestReport {
+  id            String      @id @default(cuid())
+  testName      String
+  result        String
+  date          DateTime?
+  prescription  Prescription @relation(fields: [prescriptionId], references: [id], onDelete: Cascade)
+  prescriptionId String
+
+  @@map("test_reports")
+} 
