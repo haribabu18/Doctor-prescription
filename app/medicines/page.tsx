@@ -141,7 +141,7 @@ export default function MedicinesList() {
 
         {showForm && (
           <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-4">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
               {editingMedicine ? 'Edit Medicine' : 'Add New Medicine'}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -151,7 +151,7 @@ export default function MedicinesList() {
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 text-gray-500 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   required
                 />
               </div>
@@ -160,7 +160,7 @@ export default function MedicinesList() {
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 text-gray-500 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   rows={3}
                 />
               </div>
@@ -171,7 +171,7 @@ export default function MedicinesList() {
                     type="text"
                     value={formData.dosageForm}
                     onChange={(e) => setFormData({ ...formData, dosageForm: e.target.value })}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 text-gray-500 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -180,7 +180,7 @@ export default function MedicinesList() {
                     type="text"
                     value={formData.strength}
                     onChange={(e) => setFormData({ ...formData, strength: e.target.value })}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 text-gray-500 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
                 <div>
@@ -189,7 +189,7 @@ export default function MedicinesList() {
                     type="text"
                     value={formData.manufacturer}
                     onChange={(e) => setFormData({ ...formData, manufacturer: e.target.value })}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="mt-1 block w-full rounded-md border-gray-300 text-gray-500 p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>
               </div>
