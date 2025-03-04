@@ -41,11 +41,11 @@ export function Dashboard({ children, }: { children: React.ReactNode}) {
   const username = 'Dr.Sailendra Mohan';
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100 p-8">
+    <div className="min-h-screen flex flex-col bg-gray-100 p-8 flex items-center">
       <div className="flex-grow max-w-7xl">
         <div className="flex items-center justify-between align-middle mb-8">
           <div className="flex items-center gap-3">
-            <img src="/profile_pic.png" alt="Logo" className="w-10 md:w-15 h-10 md:h-15" />
+            <img src="/profile_pic.jpg" alt="Logo" className="w-10 md:w-15 h-10 md:h-15 rounded-full" />
             <h1 className="text-sm md:text-lg font-bold text-gray-400">Welcome,<br />
               <span className="text-lg md:text-2xl text-black">{username}</span>
             </h1>
