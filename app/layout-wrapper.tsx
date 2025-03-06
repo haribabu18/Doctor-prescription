@@ -42,7 +42,7 @@ export function Dashboard({ children, }: { children: React.ReactNode}) {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 p-8 flex items-center">
-      <div className="flex-grow max-w-7xl">
+      <div className="flex-grow max-w-7xl w-full">
         <div className="flex items-center justify-between align-middle mb-8">
           <div className="flex items-center gap-3">
             <img src="/profile_pic.jpg" alt="Logo" className="w-10 md:w-15 h-10 md:h-15 rounded-full" />
