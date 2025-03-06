@@ -113,7 +113,7 @@ export default function MedicinesList() {
     return (
       <div className="min-h-screen bg-gray-100 p-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center">Loading medicines...</div>
+          <div className="text-center text-blue-400">Loading medicines...</div>
         </div>
       </div>
     );
@@ -122,14 +122,16 @@ export default function MedicinesList() {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Medicines</h1>
+        <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-8">
+          <h1 className="text-2xl font-bold text-gray-800 mb-5 sm:mb-0 md:text-3xl">Medicines</h1>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center space-x-2"
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center space-x-2 text-sm md:text-md"
           >
-            <FaPlus />
+            <span>{showForm ? '' : <FaPlus />}</span>
             <span>{showForm ? 'Cancel' : 'Add Medicine'}</span>
+            <span>{showForm ? 'x' : ''}</span>
+
           </button>
         </div>
 
@@ -219,13 +221,13 @@ export default function MedicinesList() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Name
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
                   Dosage Form
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
                   Strength
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
                   Manufacturer
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -242,13 +244,13 @@ export default function MedicinesList() {
                       <div className="text-sm text-gray-500">{medicine.description}</div>
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">
                     {medicine.dosageForm || '-'}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">
                     {medicine.strength || '-'}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden lg:table-cell">
                     {medicine.manufacturer || '-'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

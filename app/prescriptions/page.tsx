@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FaFilePrescription, FaDownload, FaPlus } from 'react-icons/fa';
+import { FaDownload, FaPlus } from 'react-icons/fa';
 import { PDFDownloadLink, Document, Page, View, Text, Image, StyleSheet } from '@react-pdf/renderer';
 import { Medicine, TestReport } from '@/app/types/prescription';
 import { format } from 'date-fns';
+import './new/cus.css'
 
 interface Prescription {
   id: string;
@@ -372,7 +373,6 @@ export default function PrescriptionsList() {
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
       month: 'short',
       day: 'numeric'
     });
@@ -382,7 +382,7 @@ export default function PrescriptionsList() {
     return (
       <div className="min-h-screen bg-gray-100 p-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center">Loading prescriptions...</div>
+          <div className="text-center text-blue-400">Loading prescriptions...</div>
         </div>
       </div>
     );
@@ -401,14 +401,14 @@ export default function PrescriptionsList() {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Prescriptions</h1>
+        <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mb-8">
+          <h1 className="text-2xl font-bold text-gray-800 mb-5 sm:mb-0 md:text-3xl">Prescriptions</h1>
           <Link
             href="/prescriptions/new"
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center space-x-2"
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center space-x-2 text-sm md:text-md"
           >
             <FaPlus />
-            <span>New Prescription</span>
+            <span>New</span>
           </Link>
         </div>
 
@@ -422,13 +422,13 @@ export default function PrescriptionsList() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Patient Name
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
                   Age
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
                   Phone
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
                   Course Days
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -445,35 +445,29 @@ export default function PrescriptionsList() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {prescription.patientName}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 hidden sm:table-cell">
                     {prescription.age}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 hidden md:table-cell">
                     {prescription.phoneNumber || '-'}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 hidden md:table-cell">
                     {prescription.courseDays} days
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm flex flex-row justify-end font-medium">
                     <PDFDownloadLink
                       document={<PrescriptionPDFDocument prescription={prescription} />}
                       fileName={`prescription-${prescription.patientName}-${formatDate(prescription.date)}.pdf`}
-                      className="text-blue-600 hover:text-blue-900 mr-4"
+                      className="text-blue-600 hover:text-blue-900 mr-4 block h-max-content w-max-content"
+                      style={{ height: "max-content", display:"block", width:"max-content" }}
                     >
                       {({ loading }) => (
                         <>
-                          <FaDownload className="inline-block mr-1" />
-                          {loading ? 'Loading...' : 'Download'}
+                          
+                          {loading ? 'Loading...' : <p className="flex flex-row items-center w-max-content justify-end"> <FaDownload className="inline-block mr-1" /> <span className='hidden md:block'> Download</span></p>}
                         </>
                       )}
                     </PDFDownloadLink>
-                    <Link
-                      href={`/prescriptions/${prescription.id}`}
-                      className="text-indigo-600 hover:text-indigo-900"
-                    >
-                      <FaFilePrescription className="inline-block mr-1" />
-                      View
-                    </Link>
                   </td>
                 </tr>
               ))}
